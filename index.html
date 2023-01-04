@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>SORTING VISUALIZER</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <h1>SORTING VISUALIZER</h1>
+    <div id="sort-area">
+      <div id="drop-it">
+	<label for="sorts">Sorting algorithm:</label>
+	<select name="sorts" id="sorts">
+	  <option class="thing" value="bubble">Bubble</option>
+	  <option value="insertion">Insertion</option>
+	  <option value="selection">Selection</option>
+	  <option value="merge">Merge</option>
+	</select>
+      </div>
+      <div id="bar-area"></div>
+      <div id="button-area">
+	<div id="button-cell">
+	  <button id="run">run</button>
+	  <button id="randomize">randomize</button>
+	</div>
+      </div>
+    </div>
+  </body>
+  <script src="./renderer.js"></script>
+</html>
