@@ -12,7 +12,8 @@ html, body {
     padding:0;
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: relative;
+    overflow:hidden;
 }
 
 h1 {
@@ -38,7 +39,7 @@ option:hover {
 }
 
 #sort-area {
-    position: absolute;
+    position: relative;
     background-color: #073642;
     margin:0;
     padding:0;
@@ -50,26 +51,28 @@ option:hover {
     position:relative;
     background-color: #555;
     border: 3px solid #EEE;
-    margin:auto;
-    width: 70%;
-    height: 70%;
+    margin:10%;
 }
 
 #button-area {
-    position:relative;
+    position:fixed;
     width: 100%;
     height: 25%;
     margin:0;
+    margin-bottom:20px;
+    padding:0;
     display: flex;
     justify-content:center;
 }
 
 #button-cell {
+    position:relative;
     height:25%;
     display:flex-column;
 }
 
 button {
+    position:relative;
   border: none;
   text-align: center;
   text-decoration: none;
@@ -92,4 +95,32 @@ button {
 #randomize:hover, #run:hover {
     background-color:#eee;
     color:black;
+}
+
+#bar-board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.occupied {
+    border: 1px solid #555;
+    background-color: #777;
+    aspect-ratio: 1;
+}
+
+.free {
+    border: 1px solid #555;
+    background-color: #777;
+    aspect-ratio: 1;
+}
+
+.fill {
+    border: 1px solid #555;
+    background-color: pink !important;
+    aspect-ratio: 1;
 }
