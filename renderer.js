@@ -3,6 +3,7 @@ const SEGS = 10;
 
 // GLOBAL STATE
 let HEIGHTS = [1,2,3,4,5,6,7,8,9,10];
+let DESIRED_SORT = "bubble";
 
 // Grab button DOM elements
 // BUTTONS
@@ -44,9 +45,9 @@ function shuff(xs) {
   return xs;
 }
 
-async function draw() {
+async function draw(ms) {
   for (let x = 0; x < SEGS; x++) {
-    await sleep(50);
+    await sleep(ms);
     for (let y = SEGS-1; y >= 0; y--) {
       cell = document.getElementById(`${y}-${x}`);
       if (cell.classList.contains("occupied")) cell.classList.toggle("fill");
@@ -54,25 +55,58 @@ async function draw() {
   }
 }
 
+// WARNING: PURE FUNCTION
+const bubbleUp = (xs) => xs.length > 1
+      ? xs.length === 2
+	? xs[0] < xs[1]
+	  ? [xs[0], xs[1]]
+	  : [xs[1], xs[0]]
+      : xs[0] < xs[1]
+	? [xs[0], ...bubbleUp(xs.slice(1))]
+	: [xs[1], ...bubbleUp([xs[0], ...xs.slice(2)])]
+      : xs;
+
+async function bubbleSort(xs) {
+  let count = xs.length;
+  while (count-- > 0) {
+    clear();
+    occupy();
+    await draw(100);
+    HEIGHTS = bubbleUp(HEIGHTS);
+  }
+}
+
 // BUTTONS
-runButton.addEventListener("click", () => {
-  console.assert(false, "TODO: Implement run!");
+runButton.addEventListener("click", async () => {
+  switch(DESIRED_SORT) {
+  case "bubble":
+    await bubbleSort(HEIGHTS);
+    await draw(50);
+    break;
+  default:
+    console.assert(false, "THAT IS NOT A VALID SORT");
+  }
 });
-randButton.addEventListener("click", async () => {
-  clear();
-  shuff(HEIGHTS);
+
+const occupy = () => {
   for (let x = 0; x < SEGS; x++) {
     for (let y = 0; y < SEGS; y++) {
       const cell = document.getElementById(`${x}-${y}`);
       if ((SEGS-x-1) < HEIGHTS[y]) cell.classList.toggle("occupied");
     }
   }
-  await draw();
+};
+
+randButton.addEventListener("click", async () => {
+  clear();
+  shuff(HEIGHTS);
+  occupy();
+  await draw(50);
 });
 
 // OPTIONS
 sortSelect.addEventListener("change", (e) => {
-  console.log(e.target.value);
+  DESIRED_SORT = e.target.value;
 });
 
 // RUN
